@@ -1,0 +1,37 @@
+version: "3.7"
+services:
+  item-app:
+    #image yang diunduh dari Docker Hub
+    image: ghcr.io/neromorph/a433-microservices-mufid96/item-app:v1
+    #nama container setelah berjalan
+    container_name: item-app
+    #Menerapkan restart policy agar container selalu restart ketika terhenti
+    restart: always
+    #port mapping agar dapat diakses dari port 80 di host
+    ports:
+      - 80:8080
+    #item-app hanya berjalan setelah item-db diluncurkan
+    depends_on:
+      - item-db
+    #akses MongoDB
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: mongouser
+    #   MONGO_INITDB_ROOT_PASSWORD: mongopass
+
+  item-db:
+    #image yang diunduh dari Docker Hub
+    image: mongo:3
+    #Menerapkan restart policy agar container selalu restart ketika terhenti
+    restart: always
+    #nama container setelah berjalan
+    container_name: item-db
+    #Memakai volume bernama app-db dengan target /data/db di container
+    volumes:
+      - app-db:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongouser
+      MONGO_INITDB_ROOT_PASSWORD: mongopass
+
+#Membuat volume bernama app-db
+volumes:
+  app-db:
