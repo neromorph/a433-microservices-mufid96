@@ -25,8 +25,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install Dependencies
-          command: go mod download
+          name: Install Docker client
+          command: apk add gcc
       - run:
           name: test-app
           command: go test -v -short --count=1 $(go list ./...)
