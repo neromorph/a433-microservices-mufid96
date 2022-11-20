@@ -31,8 +31,8 @@ jobs:
           name: test-app
           command: go test -v -short --count=1 $(go list ./...)
   build-app-karsajobs:
-    machine: # executor type
-      image: ubuntu-2004:202010-01
+    docker: # executor type
+      - image: pipelinecomponents/shellcheck
     steps:
       - checkout
       - run:
