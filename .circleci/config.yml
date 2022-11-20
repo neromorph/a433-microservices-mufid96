@@ -1,0 +1,41 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+jobs:
+  lint-dockerfile:
+    docker:
+      - image: hadolint/hadolint:latest-alpine
+    steps:
+      - checkout
+      - run:
+          name: Run hadolint
+          command: hadolint Dockerfile
+  build-app-karsajobs-ui:
+    machine:
+      image: ubuntu-2004:current
+      docker_layer_caching: true
+    steps:
+      - checkout
+      - run:
+          name: Build and Push
+          command: ./build_push_image_karsajobs.sh
+
+# Invoke jobs via workflows
+# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+workflows:
+  backend-ci: # This is the name of the workflow, feel free to change it to better match your workflow.
+    # Inside the workflow, you define the jobs you want to run.
+    jobs:
+      - lint-dockerfile:
+          filters:
+            branches:
+              only:
+                - karsajobs-ui
+      - build-app-karsajobs-ui:
+          filters:
+            branches:
+              only:
+                - karsajobs-ui
