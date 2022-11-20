@@ -51,11 +51,15 @@ workflows:
               only:
                 - karsajobs
       - test-app:
+          requires:
+            - lint-dockerfile
           filters:
             branches:
               only:
                 - karsajobs
       - build-app-karsajobs:
+          requires:
+            - test-app
           filters:
             branches:
               only:
