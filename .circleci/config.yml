@@ -31,7 +31,11 @@ jobs:
           name: test-app
           command: go test -v -short --count=1 $(go list ./...)
   build-app-karsajobs:
-    machine: true
+    docker: # executor type
+      - image: pipelinecomponents/shellcheck
+        auth:
+          username: neromorph
+          password: $PASSWORD_GITHUB
     steps:
       - checkout
       - run:
