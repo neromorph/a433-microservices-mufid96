@@ -32,6 +32,8 @@ jobs:
           command: go test -v -short --count=1 $(go list ./...)
   build-app-karsajobs:
     working_directory: /Users/nurmufid/projects/dicoding/microservices/backend
+    machine: # executor type
+      image: ubuntu-2004:202010-01
     steps:
       - checkout
       - run:
@@ -49,7 +51,12 @@ workflows:
             branches:
               only:
                 - karsajobs
-      - build:
+      - test-app:
+          filters:
+            branches:
+              only:
+                - karsajobs
+      - build-app-karsajobs:
           filters:
             branches:
               only:
