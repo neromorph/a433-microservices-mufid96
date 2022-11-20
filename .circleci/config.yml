@@ -31,7 +31,6 @@ jobs:
           name: test-app
           command: go test -v -short --count=1 $(go list ./...)
   build-app-karsajobs:
-    working_directory: /Users/nurmufid/projects/dicoding/microservices/backend
     machine: # executor type
       image: ubuntu-2004:202010-01
     steps:
