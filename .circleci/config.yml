@@ -35,6 +35,8 @@ workflows:
               only:
                 - karsajobs-ui
       - build-app-karsajobs-ui:
+          requires:
+            - "lint-dockerfile"
           filters:
             branches:
               only:
