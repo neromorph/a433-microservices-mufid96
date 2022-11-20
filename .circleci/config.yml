@@ -8,7 +8,7 @@ jobs:
   lint-dockerfile:
     working_directory: /Users/nurmufid/projects/dicoding/microservices/backend
     docker:
-      - image: hadolint/hadolint
+      - image: hadolint/hadolint:latest-alpine
     steps:
       - checkout
       - run:
