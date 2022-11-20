@@ -25,6 +25,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install Dependencies
+          command: go mod download
+      - run:
           name: test-app
           command: go test -v -short --count=1 $(go list ./...)
       - run:
