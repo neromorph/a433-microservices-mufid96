@@ -14,7 +14,7 @@ jobs:
       - run:
           name: Run hadolint
           command: hadolint Dockerfile
-  build:
+  test-app:
     working_directory: /Users/nurmufid/projects/dicoding/microservices/backend
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
@@ -25,13 +25,17 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install Docker client
+          name: Install Docker Dependencies
           command: apk add build-base
       - run:
           name: test-app
           command: go test -v -short --count=1 $(go list ./...)
+  build-app-karsajobs:
+    working_directory: /Users/nurmufid/projects/dicoding/microservices/backend
+    steps:
+      - checkout
       - run:
-          name: build-app-karsajobs
+          name: Build and Push
           command: ./build_push_image_karsajobs.sh
 
 # Invoke jobs via workflows
