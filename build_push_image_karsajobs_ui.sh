@@ -14,7 +14,7 @@ sleep 5
 echo
 #Mengubah nama image agar sesuai dengan format Docker Hub
 echo "Renaming docker image..."
-docker tag karsajobs:latest ghcr.io/neromorph/a433-microservices-mufid96/karsajobs-ui:latest
+docker tag karsajobs-ui:latest ghcr.io/neromorph/a433-microservices-mufid96/karsajobs-ui:latest
 sleep 5
 echo
 #Login ke Github Packages
