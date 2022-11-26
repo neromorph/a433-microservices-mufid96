@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongo-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  # ukuran penyimpanan
+  capacity:
+    storage: 1Gi
+  # hak akses volume dapat di pasang sebagai read-write oleh satu Node
+  accessModes:
+    - ReadWriteOnce
+  # lokasi mount volume
+  hostPath:
+    path: "/data/db"

@@ -1,0 +1,60 @@
+# Versi API Kubernetes mana yang digunakan
+apiVersion: apps/v1
+# Jenis objek apa yang dibuat
+kind: Deployment
+# Data yang membantu mengidentifikasi objek
+metadata:
+  name: karsajobs-deployment
+  labels:
+    name: karsajobs
+    type: backend
+# Konfigurasi untuk objek
+spec:
+  # membuat 1 pod replica
+  replicas: 1
+  # seleksi pod sesuai label
+  selector:
+    matchLabels:
+      name: karsajobs-pod
+      type: backend
+  # menentukan image container yang akan dijalankan di setiap pod dan port
+  template:
+    metadata:
+      name: karsajobs-pod
+      labels:
+        name: karsajobs-pod
+        type: backend
+    # spesifikasi container
+    spec:
+      containers:
+        # nama container
+      - name: karsajobs-ui-app
+        # image hasil build
+        image: ghcr.io/neromorph/a433-microservices-mufid96/karsajobs:latest
+        # port container
+        ports:
+        - containerPort: 8080
+        env:
+          # port aplikasi backend
+          - name: APP_PORT
+            value: "8080"
+          # nama host mongodb untuk koneksi di backend
+          - name: MONGO_HOST
+            value: "$(MONGODB_SVC_SERVICE_HOST)"
+          # mengambil username mongodb dari manifest secret mongo
+          - name: MONGO_USER
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: MONGO_ROOT_USERNAME
+          # mengambil password mongodb dari manifest secret mongo
+          - name: MONGO_PASS
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: MONGO_ROOT_PASSWORD
+        # pembatas resource host
+        resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"

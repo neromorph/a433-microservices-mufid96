@@ -1,0 +1,3 @@
+Github repository : https://github.com/neromorph/a433-microservices-mufid96
+Github packages (FE) : https://github.com/neromorph/a433-microservices-mufid96/pkgs/container/a433-microservices-mufid96%2Fkarsajobs-ui
+Github packages (BE) : https://github.com/neromorph/a433-microservices-mufid96/pkgs/container/a433-microservices-mufid96%2Fkarsajobs

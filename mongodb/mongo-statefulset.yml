@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb
+  labels:
+    app: mongodb
+spec:
+  selector:
+    matchLabels:
+      app: mongodb
+      tier: backend
+  # nama service untuk dikaitkan ke statefulset
+  serviceName: mongodb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mongodb
+        tier: backend
+    spec:
+      # waktu tunggu sebelum terminasi
+      terminationGracePeriodSeconds: 10
+      containers:
+        # nama container
+      - name: mongodb
+        # image mongodb dari docker hub
+        image: mongo
+        ports:
+          # port yang digunakan
+        - containerPort: 27017
+          # nama port
+          name: mongodb
+        env:
+          # mengambil nilai username mongodb dari file
+          - name: MONGO_INITDB_ROOT_USERNAME_FILE
+            value: /etc/mongo-credentials/MONGO_ROOT_USERNAME
+          # mengambil nilai password mongodb dari file
+          - name: MONGO_INITDB_ROOT_PASSWORD_FILE
+            value: /etc/mongo-credentials/MONGO_ROOT_PASSWORD
+        volumeMounts:
+        # Persistent Volume dengan mount path /data/db
+        - name: mongodb-persistent-storage
+          mountPath: "/data/db"
+        # ConfigMap dengan mount path /config
+        - name: mongodb-cm
+          mountPath: "/config"
+        # Secret dengan mount path /etc/mongo-credentials
+        - name: mongodb-secret
+          mountPath: "/etc/mongo-credentials"
+          readOnly: true
+      volumes:
+        # mengambil volume persistent dari pvc
+        - name: mongodb-persistent-storage
+          persistentVolumeClaim:
+            claimName: mongodb-pv-claim
+        # mengambil nilai configmap
+        - name: mongodb-cm
+          configMap:
+            name: mongodb-configmap
+        # mengambil nilai secret
+        - name: mongodb-secret
+          secret:
+            secretName: mongo-secret

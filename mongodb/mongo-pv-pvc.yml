@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-pv-claim
+  labels:
+    app: mongodb
+spec:
+  storageClassName: manual
+  # hak akses volume dapat di pasang sebagai read-write oleh satu Node
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      # ukuran penyimpanan
+      storage: 1Gi

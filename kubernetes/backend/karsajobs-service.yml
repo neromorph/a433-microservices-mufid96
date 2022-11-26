@@ -1,0 +1,22 @@
+# Versi API Kubernetes mana yang digunakan
+apiVersion: v1
+# Jenis objek apa yang dibuat
+kind: Service
+# Data yang membantu mengidentifikasi objek
+metadata:
+  name: karsajobs-service
+  labels:
+    name: karsajobs-service
+    type: backend
+# Konfigurasi untuk objek
+spec:
+  # tipe port yang digunakan
+  type: NodePort
+  # port yang digunakan
+  ports:
+  - port: 8080
+    nodePort: 30002
+  # seleksi pod sesuai label
+  selector:
+    name: karsajobs-pod
+    type: backend

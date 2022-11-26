@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-svc
+  labels:
+    app: mongodb
+spec:
+  ports:
+      # port yang digunakan
+    - port: 27017
+      # network protocol yang digunakan
+      protocol: TCP
+      # nama port
+      name: mongo
+  # seleksi pod sesuai label
+  selector:
+    app: mongodb
+    tier: backend
+  # tipe IP yang digunakan
+  type: ClusterIP

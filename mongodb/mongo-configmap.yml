@@ -1,0 +1,12 @@
+# Versi API Kubernetes mana yang digunakan
+apiVersion: v1
+# Jenis objek apa yang dibuat
+kind: ConfigMap
+# Data yang membantu mengidentifikasi objek
+metadata:
+  name: mongodb-configmap
+# memperlakukan data sebagai file mongo.conf yang memiliki properti storage dengan key dbPath dan nilai /data/db
+data:
+  mongo.conf: |
+    storage:
+      dbPath: /data/db

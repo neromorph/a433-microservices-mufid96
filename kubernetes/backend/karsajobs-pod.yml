@@ -1,0 +1,25 @@
+# Versi API Kubernetes mana yang digunakan
+apiVersion: v1
+# Jenis objek apa yang dibuat
+kind: Pod
+# Data yang membantu mengidentifikasi objek
+metadata:
+  name: karsajobs-pod
+  labels:
+    name: karsajobs-pod
+    type: backend
+# spesifikasi container
+spec:
+  containers:
+    # nama container
+  - name: karsajobs
+    # image hasil build
+    image: ghcr.io/neromorph/a433-microservices-mufid96/karsajobs:latest
+    # pembatas resource host
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    # port container
+    ports:
+      - containerPort: 8080

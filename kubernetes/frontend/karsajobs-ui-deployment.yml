@@ -1,0 +1,41 @@
+# Versi API Kubernetes mana yang digunakan
+apiVersion: apps/v1
+# Jenis objek apa yang dibuat
+kind: Deployment
+# Data yang membantu mengidentifikasi objek
+metadata:
+  name: karsajobs-ui-deployment
+  labels:
+    name: karsajobs-ui
+    type: frontend
+# Konfigurasi untuk objek
+spec:
+  # membuat 1 pod replica
+  replicas: 1
+  # seleksi pod sesuai label
+  selector:
+    matchLabels:
+      name: karsajobs-ui-pod
+      type: frontend
+  # menentukan image container yang akan dijalankan di setiap pod dan port
+  template:
+    metadata:
+      name: karsajobs-ui-pod
+      labels:
+        name: karsajobs-ui-pod
+        type: frontend
+    # spesifikasi container
+    spec:
+      containers:
+        # nama container
+      - name: karsajobs-ui-app
+        # image hasil build
+        image: ghcr.io/neromorph/a433-microservices-mufid96/karsajobs-ui:latest
+         # port container
+        ports:
+        - containerPort: 8000
+        # pembatas resource host
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
